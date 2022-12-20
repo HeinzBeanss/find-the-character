@@ -49,8 +49,14 @@ const Photo = () => {
             console.log(e);
             let rect = e.target.getBoundingClientRect();
             console.log(rect);
+            // WITH MARGIN THIS WORKS, BUT NOT WITHOUT
             console.log(`clicked at x: ${e.clientX - rect.left}`)
             console.log(`clicked at y: ${e.clientY - rect.top}`)
+
+            // WITHOUT MARGIN THIS WORKS,  BUT NOT WITH
+            console.log(`clicked at x: ${e.pageX - e.target.offsetLeft}`)
+            console.log(`clicked at y: ${e.pageY - e.target.offsetTop}`)
+
             setDropDown(<Dropdown posx={(e.clientX - rect.left)} posy={(e.clientY - rect.top)} charactersToFind={charactersToFind} closeDropDown={closeDropDown}/>)
         }
     }

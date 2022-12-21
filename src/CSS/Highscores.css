@@ -1,0 +1,7 @@
+.scoreboard {
+    position: absolute;
+    z-index: 1;
+    right: -30px;
+    background-color: #1f1f1f;
+    padding: 25px;
+}

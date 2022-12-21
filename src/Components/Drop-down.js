@@ -44,9 +44,13 @@ const Dropdown = (props) => {
                     props.setFeedbackMessage(<FeedbackMessage found={true} name={doc.data().name} showFeedbackMessage={props.showFeedbackMessage} posx={props.posx} posy={props.posy}/>);
                     props.setShowFeedbackMessage(true);
                     // setFeedbackMessage(<FeedbackMessage name={doc.data().name}/>);
-                    
-                    
+                    if (props.charactersFound.includes(character.name)) {
+                        console.log("ALREADY THERE")
+                    } else {
+                        props.setCharactersFound(oldArray => [...oldArray, character.name]);
+                    }
 
+                    
 
                 } else {
                     props.setShowFeedbackMessage(true);

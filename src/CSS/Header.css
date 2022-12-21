@@ -3,3 +3,7 @@
     justify-content: space-around;
     align-items: flex-end;
 }
+
+.highscoretitle {
+    position: relative;
+}

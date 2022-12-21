@@ -3,7 +3,38 @@ import PhotoScene from "../Assets/egor-klyuchnyk.jpg";
 import Dropdown from "../Components/Drop-down";
 import "../CSS/Photo.css"
 
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+
+const config = {
+    apiKey: "AIzaSyAG-z2QOtLeZUr8cjc00p29EvAqCjHXRyI",
+    authDomain: "find-the-character-fd842.firebaseapp.com",
+    projectId: "find-the-character-fd842",
+    storageBucket: "find-the-character-fd842.appspot.com",
+    messagingSenderId: "37428567468",
+    appId: "1:37428567468:web:41f2700f728230468d2e09"
+  };
+
+const app = initializeApp(config);
+const db = getFirestore(app);
+
 const Photo = () => {
+
+    let [timer, setTimer] = useState(0);
+    let [stopTimer, setStopTimer] = useState(false);
+
+    useEffect(() => {
+        if (stopTimer === true) {
+
+        } else {
+            const onesecondtimer = setTimeout(() => {
+                setTimer(timer + 1)
+                console.log(timer);
+            }, 1000);
+            return () => clearTimeout(onesecondtimer);
+        }
+    }, [timer, stopTimer])
 
     let charactersToFind = [
         { 
@@ -25,6 +56,44 @@ const Photo = () => {
             name: "Pokeball"
         }
     ]
+
+    let [charactersFound, setCharactersFound] = useState([]);
+    useEffect(() => {
+        if (charactersFound.length === 6) {
+            console.log("ALL CHARACTERS FOUND!");
+            setStopTimer(true);
+            console.log(timer);
+
+            
+            let minutes = Math.floor(timer / 60);
+            // console.log(`minutes: ${minutes}`);
+            let minutesPadded = String(minutes).padStart(2, "0");
+            // console.log(minutesPadded);
+
+            let seconds = timer - minutes * 60;
+            // console.log(`seconds: ${seconds}`);
+            let secondsPadded = String(seconds).padStart(2, "0");
+            // console.log(secondsPadded);
+
+            let timetodisplay = `${minutesPadded}:${secondsPadded}`;
+            console.log(timetodisplay);
+
+            let userName = prompt('Please Enter your Name');
+            console.log(userName);
+
+            const writeUsernameToHighscoreBoard = async () => {
+                const docRef = await addDoc(collection(db, "highscores"), {
+                    name: userName,
+                    time: timetodisplay,
+                  });
+            }
+
+            writeUsernameToHighscoreBoard();
+            // write username = maybe await.
+        }
+        console.log("below is charactersFound")
+        console.log(charactersFound);
+    }, [charactersFound])
 
     // FOR DROPDOWN MOUNTING AND UNMOUNTING
     let [isDropDownOpen, setIsDropDownOpen] = useState(false);
@@ -53,7 +122,7 @@ const Photo = () => {
             // console.log(`clicked at x: ${e.pageX - e.target.offsetLeft}`)
             // console.log(`clicked at y: ${e.pageY - e.target.offsetTop}`)
 
-            setDropDown(<Dropdown posx={(e.clientX - rect.left)} posy={(e.clientY - rect.top)} charactersToFind={charactersToFind} closeDropDown={closeDropDown} setFeedbackMessage={setFeedbackMessage} showFeedbackMessage={showFeedbackMessage} setShowFeedbackMessage={setShowFeedbackMessage}/>)
+            setDropDown(<Dropdown posx={(e.clientX - rect.left)} posy={(e.clientY - rect.top)} charactersToFind={charactersToFind} closeDropDown={closeDropDown} setFeedbackMessage={setFeedbackMessage} showFeedbackMessage={showFeedbackMessage} setShowFeedbackMessage={setShowFeedbackMessage} charactersFound={charactersFound} setCharactersFound={setCharactersFound}/>)
         }
     }
 

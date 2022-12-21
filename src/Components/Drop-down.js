@@ -20,17 +20,6 @@ const db = getFirestore(app);
 
 const Dropdown = (props) => {
 
-    // create a response message - show it where you press the cursor basically
-    // set it on a timer, maybe with useeffect.
-    let [showFeedbackMessage, setShowFeedbackMessage] = useState(false);
-    let [feedbackMessage, setFeedbackMessage] = useState([])
-
-    useEffect(() => {
-        // timeout here.
-
-        return () => setShowFeedbackMessage(false);
-    }, [feedbackMessage])
-
     const verifyCharacterLocation = async (character) => { 
         props.closeDropDown();
         console.log(character.name);
@@ -52,13 +41,17 @@ const Dropdown = (props) => {
             if (doc.data().xcoord < (props.posx + 50) && doc.data().xcoord > (props.posx - 50)
                 && doc.data().ycoord < (props.posy + 50) && doc.data().ycoord > (props.posy - 50)) {
                     console.log(`you found ${doc.data().name}`)
-                    setShowFeedbackMessage(true);
-                    setFeedbackMessage(<FeedbackMessage name={doc.data().name}/>);
+                    props.setFeedbackMessage(<FeedbackMessage found={true} name={doc.data().name} showFeedbackMessage={props.showFeedbackMessage} posx={props.posx} posy={props.posy}/>);
+                    props.setShowFeedbackMessage(true);
+                    // setFeedbackMessage(<FeedbackMessage name={doc.data().name}/>);
+                    
                     
 
 
                 } else {
+                    props.setShowFeedbackMessage(true);
                     console.log(`you didn't find ${doc.data().name}`)
+                    props.setFeedbackMessage(<FeedbackMessage found={false}name={doc.data().name} showFeedbackMessage={props.showFeedbackMessage} posx={props.posx} posy={props.posy}/>);
                 }
             // console.log(props.posx);
             // console.log(props.posy);

@@ -40,9 +40,3 @@
   .character:hover {
     background-color: #0a0a0a;
   }
-
-  .feedback {
-    position: absolute;
-    border: red solid 2px;
-    padding: 20px;
-  }

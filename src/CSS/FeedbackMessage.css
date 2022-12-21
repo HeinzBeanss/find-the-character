@@ -1,0 +1,7 @@
+.feedback {
+    position: absolute;
+    /* border: red solid 5px; */
+    padding: 20px;
+    background-color: #1f1f1f;
+    border-radius: 0.5rem;
+  }

@@ -14,13 +14,20 @@
     justify-content: space-between;
     font-size: 1.4rem;
     padding: 4px;
+    color: white;
+    width: 250px;
+    width: 100%;
     
 }
 
 .highscorename {
     font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
 }
 
 .highscoretime {
     font-weight: 300;
+    text-align: right;
 }

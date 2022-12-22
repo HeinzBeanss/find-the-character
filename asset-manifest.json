@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/find-the-character/static/css/main.8c817ac6.css",
+    "main.css": "/find-the-character/static/css/main.b9c099a4.css",
     "main.js": "/find-the-character/static/js/main.90637703.js",
     "static/media/egor-klyuchnyk.jpg": "/find-the-character/static/media/egor-klyuchnyk.de70e0b8e907976e3726.jpg",
     "index.html": "/find-the-character/index.html",
-    "main.8c817ac6.css.map": "/find-the-character/static/css/main.8c817ac6.css.map",
+    "main.b9c099a4.css.map": "/find-the-character/static/css/main.b9c099a4.css.map",
     "main.90637703.js.map": "/find-the-character/static/js/main.90637703.js.map"
   },
   "entrypoints": [
-    "static/css/main.8c817ac6.css",
+    "static/css/main.b9c099a4.css",
     "static/js/main.90637703.js"
   ]
 }

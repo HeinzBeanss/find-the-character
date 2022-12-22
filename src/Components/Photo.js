@@ -5,7 +5,7 @@ import "../CSS/Photo.css"
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 const config = {
     apiKey: "AIzaSyAG-z2QOtLeZUr8cjc00p29EvAqCjHXRyI",
@@ -82,18 +82,15 @@ const Photo = () => {
             console.log(userName);
 
             const writeUsernameToHighscoreBoard = async () => {
-                const docRef = await addDoc(collection(db, "highscores"), {
+                await addDoc(collection(db, "highscores"), {
                     name: userName,
                     time: timetodisplay,
                   });
             }
 
             writeUsernameToHighscoreBoard();
-            // write username = maybe await.
         }
-        console.log("below is charactersFound")
-        console.log(charactersFound);
-    }, [charactersFound])
+    }, [charactersFound, timer])
 
     // FOR DROPDOWN MOUNTING AND UNMOUNTING
     let [isDropDownOpen, setIsDropDownOpen] = useState(false);

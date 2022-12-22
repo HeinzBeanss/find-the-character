@@ -4,4 +4,23 @@
     right: -30px;
     background-color: #1f1f1f;
     padding: 25px;
+    border-radius: 0.6rem;
+}
+
+.highscoreitem {
+    /* position: absolute; */
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    padding: 4px;
+    
+}
+
+.highscorename {
+    font-weight: 500;
+}
+
+.highscoretime {
+    font-weight: 300;
 }

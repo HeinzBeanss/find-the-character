@@ -4,8 +4,7 @@ import Highscores from "../Components/Highscores";
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { async } from "@firebase/util";
+import { collection, getDocs } from "firebase/firestore";
 
 const config = {
     apiKey: "AIzaSyAG-z2QOtLeZUr8cjc00p29EvAqCjHXRyI",
@@ -20,49 +19,46 @@ const app = initializeApp(config);
 const db = getFirestore(app);
 
 const Header = () => {
+    let [getData, setGetData] = useState(true);
     let [highscores, setHighscores] = useState([]);
     let [highscoresData, setHighscoresData] = useState([]);
 
-    // useEffect(() => {
+    useEffect(() => {
+        if (getData === true) {
+            const getScoreboardData = async () => {
+                let temparray = [];
+                const querySnapshot = await getDocs(collection(db, "highscores"));
+                querySnapshot.forEach((doc) => {
 
-        
-    //     console.log(highscoresData);
-    // }, [highscoresData])
+                if (temparray.includes(doc.data())) {
+                    // do nothing
+                } else {
+                    temparray.push(doc.data());
+                }
+                setGetData(false)
+                })
 
-  
-    
-    //on click, get the info, read the data. pass it as props through to highscores!
-    const showScoreboard = () => {
-        if (highscores !== <Highscores/>) {
-            setHighscores(<Highscores/>)
-            console.log(highscores);
-        } else if (highscores === <Highscores/> ) {
-            setHighscores([]);
+                setHighscoresData(temparray);
+            };
+        getScoreboardData();
         }
-        // figure out how to close it
-    
+    }, [getData, highscoresData])
 
+    // onMouseEnter passes in true, onMouseLeave passes in false
+    const showScoreboard = (show) => {
+        if (show === false) {
+            setHighscores([])
+        } else if (show === true) {
+            setHighscores(<Highscores highscores={highscoresData}/>)
+        }
     }
-
-    const getScoreboardData = async () => {
-        const querySnapshot = await getDocs(collection(db, "highscores"));
-        querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
-        setHighscoresData(oldArray => [...oldArray, doc.data()]);
-        // console.log(highscores);
-
-        })
-    };
-    
-    // getScoreboardData();
 
     return (
         <div className="header">
             <h1> Find The Character </h1>
-            <h2 className="highscoretitle" onClick={ () => {
-                showScoreboard();
-                getScoreboardData();
-            }}> Highscores {highscores}</h2>
+            <h2 className="highscoretitle" onMouseEnter={ () => {
+                showScoreboard(true);
+            }} onMouseLeave={ () => { showScoreboard(false)}}> Highscores {highscores}</h2>
         </div>
     )
 }

@@ -26,11 +26,10 @@ const Photo = () => {
 
     useEffect(() => {
         if (stopTimer === true) {
-
+            // do nothing
         } else {
             const onesecondtimer = setTimeout(() => {
                 setTimer(timer + 1)
-                console.log(timer);
             }, 1000);
             return () => clearTimeout(onesecondtimer);
         }
@@ -58,28 +57,24 @@ const Photo = () => {
     ]
 
     let [charactersFound, setCharactersFound] = useState([]);
+
     useEffect(() => {
         if (charactersFound.length === 6) {
-            console.log("ALL CHARACTERS FOUND!");
             setStopTimer(true);
-            console.log(timer);
-
             
+            // Retrieves Minutes from timer
             let minutes = Math.floor(timer / 60);
-            // console.log(`minutes: ${minutes}`);
             let minutesPadded = String(minutes).padStart(2, "0");
-            // console.log(minutesPadded);
 
+            // Retrieves Seconds from timer
             let seconds = timer - minutes * 60;
-            // console.log(`seconds: ${seconds}`);
             let secondsPadded = String(seconds).padStart(2, "0");
-            // console.log(secondsPadded);
 
+            // Combines Minutes and Seconds
             let timetodisplay = `${minutesPadded}:${secondsPadded}`;
             console.log(timetodisplay);
 
-            let userName = prompt('Please Enter your Name');
-            console.log(userName);
+            let userName = prompt('Good job! You found all the characters. Please enter your name to be placed on the leaderboard');
 
             const writeUsernameToHighscoreBoard = async () => {
                 await addDoc(collection(db, "highscores"), {
@@ -87,7 +82,6 @@ const Photo = () => {
                     time: timetodisplay,
                   });
             }
-
             writeUsernameToHighscoreBoard();
         }
     }, [charactersFound, timer])
@@ -113,13 +107,22 @@ const Photo = () => {
             setIsDropDownOpen(true);
             let rect = e.target.getBoundingClientRect();
             // WITH MARGIN THIS WORKS, BUT NOT WITHOUT
-            console.log(`clicked at x: ${e.clientX - rect.left}`)
-            console.log(`clicked at y: ${e.clientY - rect.top}`)
+            // console.log(`clicked at x: ${e.clientX - rect.left}`)
+            // console.log(`clicked at y: ${e.clientY - rect.top}`)
             // WITHOUT MARGIN THIS WORKS,  BUT NOT WITH
             // console.log(`clicked at x: ${e.pageX - e.target.offsetLeft}`)
             // console.log(`clicked at y: ${e.pageY - e.target.offsetTop}`)
 
-            setDropDown(<Dropdown posx={(e.clientX - rect.left)} posy={(e.clientY - rect.top)} charactersToFind={charactersToFind} closeDropDown={closeDropDown} setFeedbackMessage={setFeedbackMessage} showFeedbackMessage={showFeedbackMessage} setShowFeedbackMessage={setShowFeedbackMessage} charactersFound={charactersFound} setCharactersFound={setCharactersFound}/>)
+            setDropDown(<Dropdown 
+                posx={(e.clientX - rect.left)} 
+                posy={(e.clientY - rect.top)} 
+                charactersToFind={charactersToFind} 
+                closeDropDown={closeDropDown} 
+                setFeedbackMessage={setFeedbackMessage} 
+                showFeedbackMessage={showFeedbackMessage} 
+                setShowFeedbackMessage={setShowFeedbackMessage} 
+                charactersFound={charactersFound} 
+                setCharactersFound={setCharactersFound}/>)
         }
     }
 
@@ -128,18 +131,13 @@ const Photo = () => {
     let [feedbackMessage, setFeedbackMessage] = useState([])
 
     useEffect(() => {
-        console.log(feedbackMessage)
-        console.log(` should we show feedback message is: ${showFeedbackMessage}`);
         if (showFeedbackMessage === true) {
-            console.log("Timer Starts")
-            const timer = setTimeout(() =>{
-                console.log("3 seconds later");
+            const timer = setTimeout(() => {
                 setFeedbackMessage([])
                 setShowFeedbackMessage(false);
             }, 3000);
             return () => clearTimeout(timer);
         }
-        
     }, [feedbackMessage, showFeedbackMessage])
 
     return (

@@ -22,12 +22,12 @@ const Dropdown = (props) => {
 
     const verifyCharacterLocation = async (character) => { 
         props.closeDropDown();
-        console.log(character.name);
-        
+                
         // Retrieve Character Data from Firebase
         const querySnapshot = await getDocs(collection(db, "characters"));
         querySnapshot.forEach((doc) => {
 
+        // Fetching Data Experiments
         // console.log(`${doc.id} => ${doc.data()}`);
         // console.log(doc.data());
         // console.log(doc.data().name);
@@ -36,40 +36,38 @@ const Dropdown = (props) => {
 
         // Compare each backend object with character.name
         if (character.name === doc.data().name) {
-            // console.log(`you pressed ${doc.data().name}!`)
 
+            // Compares clicked coordinates with selected character's position
             if (doc.data().xcoord < (props.posx + 50) && doc.data().xcoord > (props.posx - 50)
                 && doc.data().ycoord < (props.posy + 50) && doc.data().ycoord > (props.posy - 50)) {
-                    console.log(`you found ${doc.data().name}`)
-                    props.setFeedbackMessage(<FeedbackMessage found={true} name={doc.data().name} showFeedbackMessage={props.showFeedbackMessage} posx={props.posx} posy={props.posy}/>);
+                    props.setFeedbackMessage(<FeedbackMessage 
+                        found={true} 
+                        name={doc.data().name} 
+                        showFeedbackMessage={props.showFeedbackMessage} 
+                        posx={props.posx} 
+                        posy={props.posy}/>);
                     props.setShowFeedbackMessage(true);
-                    // setFeedbackMessage(<FeedbackMessage name={doc.data().name}/>);
                     if (props.charactersFound.includes(character.name)) {
-                        console.log("ALREADY THERE")
                     } else {
                         props.setCharactersFound(oldArray => [...oldArray, character.name]);
                     }
 
-                    
-
                 } else {
                     props.setShowFeedbackMessage(true);
-                    console.log(`you didn't find ${doc.data().name}`)
-                    props.setFeedbackMessage(<FeedbackMessage found={false}name={doc.data().name} showFeedbackMessage={props.showFeedbackMessage} posx={props.posx} posy={props.posy}/>);
+                    props.setFeedbackMessage(<FeedbackMessage 
+                        found={false}
+                        name={doc.data().name} 
+                        showFeedbackMessage={props.showFeedbackMessage} 
+                        posx={props.posx} 
+                        posy={props.posy}/>);
                 }
-            // console.log(props.posx);
-            // console.log(props.posy);
-        }
+            }
         });
             
-        //getdatafor eachcharacter
-        // validate it
-        // print a message/component on screen depending on the result!
     }
 
     return (
         <div>
-            {/* <div className="feedback">{feedbackMessage}</div> */}
             <div className="dropdown" style={{top: (props.posy - 44), left: (props.posx - 44)}}>
                 <div className="areaselected"></div>
                 <div className="dropdownlist">
